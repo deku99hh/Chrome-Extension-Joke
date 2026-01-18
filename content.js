@@ -2,7 +2,8 @@ let dicshunary = {
     "Microsoft": "Microslop",
     "Google": "Googoo",
     "Facebook": "Meta-Slop"
-}
+};
+
 function getTheReplace(text){    
     return(dicshunary[text]);
 }
