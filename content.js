@@ -15,9 +15,10 @@ function getTheReplace(text){
 }
 
 
-let thePage = document.getElementsByTagName('*');
 
 function replace(){
+    let thePage = document.getElementsByTagName('*');
+    
     for (const element of thePage) {
             // console.log(element);
         for (const node of element.childNodes) {
@@ -29,11 +30,10 @@ function replace(){
                     const word = arrayOfTheWords[i];
                     
                     for (const key in dicshunary) {
-                        if (word == key) {
+                        if (word.toLowerCase() == key.toLowerCase()) {
                             arrayOfTheWords[i] = getTheReplace(key);
                             
                         }
-                        
                     }
                 }
                 node.nodeValue = arrayOfTheWords.join(" ");
