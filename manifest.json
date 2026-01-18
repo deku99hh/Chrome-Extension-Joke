@@ -9,12 +9,17 @@
       "js": ["content.js"]
     }
   ],
-  "permissions": [
-    "tabs",
-    "activeTab"
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png" 
-  }
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
 }
