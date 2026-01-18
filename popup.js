@@ -14,10 +14,10 @@ let list = [
 ];
 
 
-if (chrome.storage.local.getItem('list')) {
-    list = JSON.parse(chrome.storage.local.getItem('list'));
-}else{
-    chrome.storage.local.setItem('list', JSON.stringify(list));
+if (localStorage.getItem('list')) {
+    list = JSON.parse(localStorage.getItem('list'));
+} else {
+    localStorage.setItem('list', JSON.stringify(list));
 }
 
 let ContentjsList = {};
@@ -38,7 +38,7 @@ function destroyAndBuild(){
         
     document.querySelector(".theList").innerHTML = pageHTML;
     updateContentjsList()
-    chrome.storage.local.setItem('list', JSON.stringify(list));
+    localStorage.setItem('list', JSON.stringify(list));
 
     document.querySelectorAll('.deletebtn').forEach((btn)=>{
         btn.addEventListener('click',()=>{
