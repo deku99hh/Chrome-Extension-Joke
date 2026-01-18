@@ -30,21 +30,25 @@ function destroyAndBuild(){
         const element = list[i];
         
         pageHTML += `
-            <div class="d-block">
-                <p class="d-inline">replacing <span>${element.word}</span> with <span>${element.replace}</span></p> <button class="${i} deletebtn" id="deletebtn">delet</button>
+            <div class="d-block mt-3">
+                <p class="d-inline">replacing <span class="text-primary">${element.word}</span> with <span class="text-primary">${element.replace}</span></p> <button class="${i} deletebtn btn btn-danger" id="deletebtn">delet</button>
             </div>
         `;
     }
         
     document.querySelector(".theList").innerHTML = pageHTML;
     updateContentjsList()
-    localStorage.setItem('list', JSON.stringify(list));
+    chrome.storage.local.set({ "myDictionary": ContentjsList }, function() {
+        console.log("ميتين العبط");
+    });
+    sendDictionaryToPage();
 
     document.querySelectorAll('.deletebtn').forEach((btn)=>{
         btn.addEventListener('click',()=>{
             delet(btn.classList[0]);
         })
     })
+    
 }
 
 document.getElementById('updateTheList').addEventListener('click',()=>{
@@ -98,14 +102,21 @@ destroyAndBuild();
 
 let dictionary = updateContentjsList(); 
 
+
 function sendDictionaryToPage() {
+    updateContentjsList(); 
+    
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        
-        chrome.tabs.sendMessage(tabs[0].id, {
-            type: "UPDATE_DICTIONARY",
-            data: dictionary
-        });
-        
+        if (tabs[0] && tabs[0].id) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                type: "UPDATE_DICTIONARY",
+                data: ContentjsList 
+            }, (response) => {
+                if (chrome.runtime.lastError) {
+                    
+                }
+            });
+        }
     });
 }
-sendDictionaryToPage();
+

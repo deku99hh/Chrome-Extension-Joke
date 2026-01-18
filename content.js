@@ -4,14 +4,6 @@ let dicshunary = {
     "Facebook": "Meta-Slop"
 };
 
-// if (localStorage.getItem('dicshunary')) {
-//     dicshunary = localStorage.getItem('dicshunary');
-// }else{
-//     localStorage.setItem('dicshunary', JSON.stringify(list));
-// }
-
-
-
 
 
 
@@ -58,13 +50,16 @@ function replace(){
 
 
 
+chrome.storage.local.get(["myDictionary"], function(result) {
+    if (result.myDictionary) {
+        dicshunary = result.myDictionary;
+        replace(); 
+    }
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    
     if (request.type === "UPDATE_DICTIONARY") {
-        let receivedDictionary = request.data;
-        
-        dicshunary = receivedDictionary;
+        dicshunary = request.data;
         replace();
     }
 });
